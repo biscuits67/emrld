@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1280px; height: 1280px; overflow: hidden; background: #03140e; }
+  .card {
+    position: relative; width: 1280px; height: 1280px; overflow: hidden;
+    font-family: "Inter", "Inter Display", sans-serif;
+    background:
+      radial-gradient(ellipse 620px 560px at 640px 470px, rgba(18, 110, 72, .55), transparent 70%),
+      radial-gradient(ellipse 900px 900px at 640px 560px, #0c4430 0%, #073020 45%, #031a12 100%);
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(120, 220, 170, .05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120, 220, 170, .05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    -webkit-mask-image: radial-gradient(ellipse 560px 520px at 640px 520px, #000 30%, transparent 80%);
+            mask-image: radial-gradient(ellipse 560px 520px at 640px 520px, #000 30%, transparent 80%);
+  }
+  .vignette {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 760px 760px at 640px 560px, transparent 55%, rgba(0, 8, 5, .55) 100%);
+  }
+  svg.art { position: absolute; left: 0; top: 0; }
+  .title {
+    position: absolute; left: 0; right: 0; top: 818px; text-align: center;
+    font-weight: 700; font-size: 116px; letter-spacing: 30px; padding-left: 30px; line-height: 1;
+    background: linear-gradient(180deg, #e9fff5 0%, #a6f5cf 45%, #4fdc9f 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 22px rgba(60, 220, 150, .45));
+  }
+  .pill-wrap { position: absolute; left: 0; right: 0; top: 1020px; display: flex; justify-content: center; }
+  .pill {
+    min-width: 520px; height: 126px; padding: 0 78px 0 calc(78px + 22px);
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 63px;
+    border: 2px solid rgba(201, 176, 112, .55);
+    background: linear-gradient(180deg, rgba(40, 42, 28, .85), rgba(14, 26, 18, .9));
+    box-shadow: inset 0 1px 0 rgba(255, 235, 180, .08), 0 10px 40px rgba(0, 0, 0, .35);
+    font-weight: 700; font-size: 64px; letter-spacing: 22px; line-height: 1;
+    color: #d8bf86;
+    white-space: nowrap;
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="grid"></div>
+  <div class="vignette"></div>
+  <svg class="art" width="1280" height="1280" viewBox="0 0 1280 1280">
+    <defs>
+      <radialGradient id="glow" cx="640" cy="480" r="300" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#22c47f" stop-opacity=".45"/>
+        <stop offset="1" stop-color="#22c47f" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="table" x1="545" y1="342" x2="737" y2="593" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#2bbd84"/>
+        <stop offset="1" stop-color="#14905e"/>
+      </linearGradient>
+      <linearGradient id="crown" x1="0" y1="110" x2="0" y2="290" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#8af0c4"/>
+        <stop offset="1" stop-color="#55d6a0"/>
+      </linearGradient>
+      <filter id="soft" x="-50%" y="-50%" width="200%" height="200%">
+        <feGaussianBlur stdDeviation="18"/>
+      </filter>
+    </defs>
+
+    <circle cx="640" cy="480" r="300" fill="url(#glow)"/>
+    <ellipse cx="640" cy="700" rx="90" ry="14" fill="#2ad08a" opacity=".35" filter="url(#soft)"/>
+
+    <!-- gem facets -->
+    <g stroke="#0b3d2a" stroke-width="1.5" stroke-linejoin="round">
+      <!-- top -->
+      <polygon points="520,285 760,285 700,342 583,342" fill="#3fd29c"/>
+      <!-- top-left corner -->
+      <polygon points="465,340 520,285 583,342 543,380" fill="#56dcaa"/>
+      <!-- top-right corner -->
+      <polygon points="760,285 815,340 737,380 700,342" fill="#22b07a"/>
+      <!-- left -->
+      <polygon points="465,340 543,380 543,555 465,600" fill="#16875a"/>
+      <!-- right -->
+      <polygon points="815,340 815,600 737,555 737,380" fill="#1a9967"/>
+      <!-- bottom-left corner -->
+      <polygon points="465,600 543,555 578,593 540,670" fill="#06372a"/>
+      <!-- bottom-right corner -->
+      <polygon points="815,600 740,670 700,593 737,555" fill="#06372a"/>
+      <!-- bottom -->
+      <polygon points="578,593 700,593 740,670 540,670" fill="#0c5a3f"/>
+      <!-- table -->
+      <polygon points="583,342 700,342 737,380 737,555 700,593 578,593 543,555 543,380" fill="url(#table)"/>
+    </g>
+    <!-- inner table outline + bottom step -->
+    <polygon points="595,365 690,365 714,390 714,545 690,570 590,570 566,545 566,390" fill="none" stroke="#5fe3b1" stroke-opacity=".28" stroke-width="2"/>
+    <line x1="555" y1="635" x2="725" y2="635" stroke="#0a4a33" stroke-width="2"/>
+    <!-- highlight -->
+    <polygon points="600,342 650,342 566,488 566,400" fill="#ffffff" opacity=".10"/>
+
+    <!-- crown -->
+    <g stroke-linejoin="round" stroke-linecap="round" fill="none">
+      <path d="M535 290 L775 278 L770 142 L715 212 L630 115 L590 215 L510 165 Z" stroke="#1b6e4c" stroke-width="30" transform="translate(0,8)"/>
+      <path d="M535 282 L770 270 L765 134 L710 204 L630 107 L585 207 L505 157 Z" stroke="url(#crown)" stroke-width="26"/>
+    </g>
+
+    <!-- sparkles -->
+    <g stroke="#f2fff9" stroke-linecap="round">
+      <path d="M857 112 v40 M837 132 h40" stroke-width="3.5"/>
+      <path d="M406 352 v26 M393 365 h26" stroke-width="2.5"/>
+      <path d="M883 594 v26 M870 607 h26" stroke-width="2.5"/>
+    </g>
+  </svg>
+
+  <div class="title">EMERALD</div>
+  <div class="pill-wrap"><div class="pill" id="label">LABEL</div></div>
+</div>
+</body>
+</html>
