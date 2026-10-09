@@ -9,6 +9,7 @@ const cards = [
   ['sms-bot', 'СМС БОТ'],
   ['all-dep', 'ALL DEP'],
   ['admin-vyvod', 'АДМИН ВЫВОД'],
+  ['admin-dodepy', 'АДМИН ДОДЕПЫ'],
 ];
 
 (async () => {
