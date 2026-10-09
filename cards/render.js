@@ -8,6 +8,7 @@ const cards = [
   ['fony', 'ФОНЫ'],
   ['sms-bot', 'СМС БОТ'],
   ['all-dep', 'ALL DEP'],
+  ['admin-vyvod', 'АДМИН ВЫВОД'],
 ];
 
 (async () => {
