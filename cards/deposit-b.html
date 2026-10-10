@@ -1,0 +1,90 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- Variant B: centred, minimal, "premium receipt" -->
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1280px; height: 720px; overflow: hidden; background: #03140e; }
+  :root { --accent: #4fdc9f; --accent-hi: #e9fff5; --accent-mid: #a6f5cf; --glow: rgba(60, 220, 150, .45); --muted: #8fb8a6; }
+  .gold { --accent: #e3c27a; --accent-hi: #fff6dc; --accent-mid: #f3dca4; --glow: rgba(230, 190, 100, .45); }
+  .card {
+    position: relative; width: 1280px; height: 720px; overflow: hidden;
+    font-family: "Inter", sans-serif; color: #eafff5; text-align: center;
+    background:
+      radial-gradient(ellipse 700px 380px at 640px 330px, rgba(18, 110, 72, .5), transparent 70%),
+      radial-gradient(ellipse 1100px 800px at 640px 360px, #0a3a28 0%, #052419 55%, #02130d 100%);
+  }
+  .gold .card, .card.gold { background:
+      radial-gradient(ellipse 700px 380px at 640px 330px, rgba(120, 95, 30, .45), transparent 70%),
+      radial-gradient(ellipse 1100px 800px at 640px 360px, #0a3a28 0%, #052419 55%, #02130d 100%); }
+  .rays {
+    position: absolute; inset: 0;
+    background: repeating-conic-gradient(from 0deg at 640px 330px, rgba(160, 255, 210, .035) 0 4deg, transparent 4deg 12deg);
+    -webkit-mask-image: radial-gradient(circle 520px at 640px 330px, #000 20%, transparent 75%);
+            mask-image: radial-gradient(circle 520px at 640px 330px, #000 20%, transparent 75%);
+  }
+  .frame { position: absolute; inset: 28px; border-radius: 28px; border: 1px solid rgba(150, 240, 200, .12); }
+  .corner { position: absolute; width: 26px; height: 26px; border-color: var(--accent); opacity: .7; }
+  .c1 { left: 28px; top: 28px; border-left: 2px solid; border-top: 2px solid; border-top-left-radius: 28px; }
+  .c2 { right: 28px; top: 28px; border-right: 2px solid; border-top: 2px solid; border-top-right-radius: 28px; }
+  .c3 { left: 28px; bottom: 28px; border-left: 2px solid; border-bottom: 2px solid; border-bottom-left-radius: 28px; }
+  .c4 { right: 28px; bottom: 28px; border-right: 2px solid; border-bottom: 2px solid; border-bottom-right-radius: 28px; }
+
+  .head { position: absolute; left: 0; right: 0; top: 74px; display: flex; justify-content: center; align-items: center; gap: 18px; }
+  .gem { width: 44px; height: 44px; }
+  .head .t { font-weight: 700; font-size: 22px; letter-spacing: 10px; color: var(--accent); padding-left: 10px; }
+  .line { width: 80px; height: 1px; background: linear-gradient(90deg, transparent, var(--accent)); }
+  .line.r { transform: scaleX(-1); }
+
+  .amount {
+    position: absolute; left: 0; right: 0; top: 168px;
+    font-weight: 800; font-size: 220px; line-height: 1; letter-spacing: -6px; font-variant-numeric: tabular-nums;
+    background: linear-gradient(180deg, var(--accent-hi) 0%, var(--accent-mid) 45%, var(--accent) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 34px var(--glow));
+  }
+  .amount small { font-size: 110px; vertical-align: 78px; letter-spacing: 0; margin-right: 8px; }
+
+  .who { position: absolute; left: 0; right: 0; top: 430px; font-size: 30px; color: var(--muted); }
+  .who b { color: #fff; font-weight: 700; }
+  .who .sep { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); margin: 0 18px; vertical-align: 6px; }
+
+  .row {
+    position: absolute; left: 50%; transform: translateX(-50%); bottom: 82px;
+    display: flex; border-radius: 18px; overflow: hidden;
+    border: 1px solid rgba(150, 240, 200, .14); background: rgba(4, 22, 15, .55);
+  }
+  .row > div { padding: 18px 40px; border-left: 1px solid rgba(150, 240, 200, .10); }
+  .row > div:first-child { border-left: 0; }
+  .row .k { font-size: 15px; letter-spacing: 3px; color: var(--muted); font-weight: 600; }
+  .row .v { font-size: 26px; font-weight: 700; margin-top: 6px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="rays"></div>
+  <div class="frame"></div>
+  <div class="corner c1"></div><div class="corner c2"></div><div class="corner c3"></div><div class="corner c4"></div>
+
+  <div class="head">
+    <div class="line"></div>
+    <svg class="gem" viewBox="0 0 44 44"><g stroke="#0b3d2a" stroke-width=".8" stroke-linejoin="round">
+      <polygon points="12,6 32,6 38,13 38,31 32,38 12,38 6,31 6,13" fill="var(--accent)"/>
+      <polygon points="15,12 29,12 32,15 32,29 29,32 15,32 12,29 12,15" fill="var(--accent-mid)" opacity=".55"/>
+    </g></svg>
+    <div class="t" id="badge">НОВЫЙ ДЕПОЗИТ</div>
+    <div class="line r"></div>
+  </div>
+
+  <div class="amount"><small>$</small><span id="amount">647</span></div>
+  <div class="who"><b id="worker">lastsignal</b><span class="sep"></span><span id="method">USDT TRC20</span></div>
+
+  <div class="row">
+    <div><div class="k">НОМЕР</div><div class="v" id="num">#1284</div></div>
+    <div><div class="k">ВРЕМЯ</div><div class="v" id="when">19:55</div></div>
+    <div><div class="k">ВЫПЛАТА</div><div class="v" id="payout">$420</div></div>
+    <div><div class="k">ЗА ДЕНЬ</div><div class="v" id="today">$4 820</div></div>
+  </div>
+</div>
+<script src="deposit-fill.js"></script>

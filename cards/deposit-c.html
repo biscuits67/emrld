@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- Variant C: deposit + live leaderboard of the day -->
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1280px; height: 720px; overflow: hidden; background: #03140e; }
+  :root { --accent: #4fdc9f; --accent-hi: #e9fff5; --accent-mid: #a6f5cf; --glow: rgba(60, 220, 150, .45); --muted: #8fb8a6; }
+  .gold { --accent: #e3c27a; --accent-hi: #fff6dc; --accent-mid: #f3dca4; --glow: rgba(230, 190, 100, .45); }
+  .card {
+    position: relative; width: 1280px; height: 720px; overflow: hidden; display: flex;
+    font-family: "Inter", sans-serif; color: #eafff5;
+    background: radial-gradient(ellipse 900px 700px at 300px 300px, #0b3f2c 0%, #052419 55%, #02130d 100%);
+  }
+  .left { position: relative; flex: 1; padding: 64px 0 0 72px; }
+  .left::after {
+    content: ""; position: absolute; right: -140px; top: 40px; width: 520px; height: 520px; border-radius: 50%;
+    background: radial-gradient(circle, var(--glow), transparent 65%); opacity: .55; pointer-events: none;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 24px; letter-spacing: 8px; }
+  .brand i { width: 26px; height: 26px; border-radius: 7px; transform: rotate(45deg) scale(.8);
+    background: linear-gradient(135deg, #8af0c4, #14905e); box-shadow: 0 0 16px rgba(60, 220, 150, .6); }
+  .badge { margin-top: 64px; font-weight: 700; font-size: 20px; letter-spacing: 5px; color: var(--accent); }
+  .amount {
+    margin-top: 10px; font-weight: 800; font-size: 170px; line-height: 1; letter-spacing: -4px; font-variant-numeric: tabular-nums;
+    background: linear-gradient(180deg, var(--accent-hi) 0%, var(--accent-mid) 45%, var(--accent) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 26px var(--glow));
+  }
+  .amount small { font-size: 86px; vertical-align: 60px; letter-spacing: 0; margin-right: 6px; }
+  .worker { margin-top: 34px; display: flex; align-items: center; gap: 18px; }
+  .ava { width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center;
+    font-weight: 800; font-size: 26px; color: #04170f;
+    background: linear-gradient(135deg, var(--accent-mid), var(--accent));
+    box-shadow: 0 0 0 4px rgba(4, 22, 15, .9), 0 0 0 6px var(--accent); }
+  .worker .n { font-size: 36px; font-weight: 700; }
+  .worker .m { font-size: 22px; color: var(--muted); margin-top: 4px; }
+  .meta { position: absolute; left: 72px; bottom: 56px; font-size: 22px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .meta b { color: #eafff5; }
+
+  .right {
+    position: relative; width: 470px; margin: 40px 40px 40px 0; padding: 36px 34px;
+    border-radius: 28px; border: 1px solid rgba(150, 240, 200, .14);
+    background: linear-gradient(180deg, rgba(16, 52, 38, .8), rgba(5, 24, 17, .85));
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05), 0 30px 60px rgba(0, 0, 0, .35);
+  }
+  .right h3 { font-size: 16px; letter-spacing: 4px; color: var(--muted); font-weight: 600; display: flex; justify-content: space-between; }
+  .right h3 span { color: #ff6b6b; letter-spacing: 2px; }
+  .right h3 span::before { content: "● "; }
+  .total { font-size: 54px; font-weight: 800; margin-top: 10px; font-variant-numeric: tabular-nums; }
+  .total em { font-style: normal; font-size: 22px; color: var(--muted); font-weight: 500; margin-left: 8px; }
+  .bar { height: 8px; border-radius: 99px; background: rgba(150, 240, 200, .1); margin-top: 16px; overflow: hidden; }
+  .bar span { display: block; height: 100%; border-radius: 99px; background: linear-gradient(90deg, #14905e, var(--accent)); }
+  .goal { font-size: 16px; color: var(--muted); margin-top: 10px; display: flex; justify-content: space-between; }
+  .goal b { color: #eafff5; }
+
+  ol { list-style: none; margin-top: 30px; }
+  li { display: grid; grid-template-columns: 34px 1fr auto; grid-template-rows: auto 6px; align-items: center;
+    column-gap: 12px; row-gap: 8px; padding: 12px 14px; border-radius: 14px; margin-bottom: 6px; }
+  li .pos { font-weight: 800; font-size: 20px; color: var(--muted); text-align: center; }
+  li:nth-child(1) .pos { color: #f1cf7e; } li:nth-child(2) .pos { color: #cfd8d4; } li:nth-child(3) .pos { color: #d39a6a; }
+  li .n { font-size: 22px; font-weight: 600; }
+  li .s { font-size: 22px; font-weight: 700; font-variant-numeric: tabular-nums; }
+  li i { grid-column: 2 / 4; height: 6px; border-radius: 99px; background: rgba(150, 240, 200, .08); }
+  li i b { display: block; height: 100%; border-radius: 99px; background: rgba(150, 240, 200, .35); }
+  li.me { background: color-mix(in srgb, var(--accent) 14%, transparent); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 45%, transparent); }
+  li.me i b { background: var(--accent); box-shadow: 0 0 10px var(--glow); }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="left">
+    <div class="brand"><i></i>EMERALD</div>
+    <div class="badge" id="badge">НОВЫЙ ДЕПОЗИТ</div>
+    <div class="amount"><small>$</small><span id="amount">647</span></div>
+    <div class="worker">
+      <div class="ava" id="initials">LA</div>
+      <div><div class="n" id="worker">lastsignal</div><div class="m" id="method">USDT TRC20</div></div>
+    </div>
+    <div class="meta"><b id="num">#1284</b> · <span id="when">19:55</span> · выплата <b id="payout">$420</b></div>
+  </div>
+  <div class="right">
+    <h3>ИТОГ ДНЯ <span>LIVE</span></h3>
+    <div class="total"><span id="today">$4 820</span><em><span id="count">12</span> деп.</em></div>
+    <div class="bar"><span id="progress" style="width:48%"></span></div>
+    <div class="goal"><span>к цели</span><b id="goal">$10 000</b></div>
+    <ol id="top"></ol>
+  </div>
+</div>
+<script src="deposit-fill.js"></script>

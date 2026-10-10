@@ -1,0 +1,99 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- Variant D: square, same visual language as template.html section cards -->
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1280px; height: 1280px; overflow: hidden; background: #03140e; }
+  :root { --accent: #4fdc9f; --accent-hi: #e9fff5; --accent-mid: #a6f5cf; --glow: rgba(60, 220, 150, .45); --muted: #8fb8a6; }
+  .gold { --accent: #e3c27a; --accent-hi: #fff6dc; --accent-mid: #f3dca4; --glow: rgba(230, 190, 100, .45); }
+  .card {
+    position: relative; width: 1280px; height: 1280px; overflow: hidden;
+    font-family: "Inter", sans-serif; color: #eafff5; text-align: center;
+    background:
+      radial-gradient(ellipse 620px 560px at 640px 380px, rgba(18, 110, 72, .55), transparent 70%),
+      radial-gradient(ellipse 900px 900px at 640px 560px, #0c4430 0%, #073020 45%, #031a12 100%);
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(120, 220, 170, .05) 1px, transparent 1px), linear-gradient(90deg, rgba(120, 220, 170, .05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    -webkit-mask-image: radial-gradient(ellipse 560px 520px at 640px 420px, #000 30%, transparent 80%);
+            mask-image: radial-gradient(ellipse 560px 520px at 640px 420px, #000 30%, transparent 80%);
+  }
+  svg.art { position: absolute; left: 0; top: 0; }
+  .gold svg.art, .gold .grid { filter: hue-rotate(-108deg) saturate(.85) brightness(1.12); }
+  .top { position: absolute; left: 80px; right: 80px; top: 70px; display: flex; justify-content: space-between;
+    font-size: 30px; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .top b { color: #eafff5; font-weight: 700; letter-spacing: 8px; }
+  .badge { position: absolute; left: 0; right: 0; top: 620px; font-weight: 700; font-size: 30px; letter-spacing: 12px; color: var(--accent); }
+  .amount {
+    position: absolute; left: 0; right: 0; top: 670px;
+    font-weight: 800; font-size: 250px; line-height: 1; letter-spacing: -6px; font-variant-numeric: tabular-nums;
+    background: linear-gradient(180deg, var(--accent-hi) 0%, var(--accent-mid) 45%, var(--accent) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 30px var(--glow));
+  }
+  .amount small { font-size: 120px; vertical-align: 90px; letter-spacing: 0; margin-right: 8px; }
+  .pill-wrap { position: absolute; left: 0; right: 0; top: 990px; display: flex; justify-content: center; }
+  .pill {
+    height: 110px; padding: 0 60px; display: flex; align-items: center; gap: 22px; border-radius: 55px;
+    border: 2px solid rgba(201, 176, 112, .55);
+    background: linear-gradient(180deg, rgba(40, 42, 28, .85), rgba(14, 26, 18, .9));
+    box-shadow: inset 0 1px 0 rgba(255, 235, 180, .08), 0 10px 40px rgba(0, 0, 0, .35);
+    font-weight: 700; font-size: 50px; color: #d8bf86; white-space: nowrap;
+  }
+  .pill span { font-size: 26px; letter-spacing: 6px; color: rgba(216, 191, 134, .65); }
+  .foot { position: absolute; left: 0; right: 0; bottom: 70px; font-size: 28px; color: var(--muted); }
+  .foot b { color: #eafff5; }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="grid"></div>
+  <svg class="art" width="1280" height="1280" viewBox="0 0 1280 1280">
+    <defs>
+      <radialGradient id="glow" cx="640" cy="380" r="300" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#22c47f" stop-opacity=".45"/><stop offset="1" stop-color="#22c47f" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="table" x1="545" y1="342" x2="737" y2="593" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#2bbd84"/><stop offset="1" stop-color="#14905e"/>
+      </linearGradient>
+      <linearGradient id="crown" x1="0" y1="110" x2="0" y2="290" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#8af0c4"/><stop offset="1" stop-color="#55d6a0"/>
+      </linearGradient>
+    </defs>
+    <circle cx="640" cy="380" r="300" fill="url(#glow)"/>
+    <g transform="translate(640 330) scale(.72) translate(-640 -400)">
+      <g stroke="#0b3d2a" stroke-width="1.5" stroke-linejoin="round">
+        <polygon points="520,285 760,285 700,342 583,342" fill="#3fd29c"/>
+        <polygon points="465,340 520,285 583,342 543,380" fill="#56dcaa"/>
+        <polygon points="760,285 815,340 737,380 700,342" fill="#22b07a"/>
+        <polygon points="465,340 543,380 543,555 465,600" fill="#16875a"/>
+        <polygon points="815,340 815,600 737,555 737,380" fill="#1a9967"/>
+        <polygon points="465,600 543,555 578,593 540,670" fill="#06372a"/>
+        <polygon points="815,600 740,670 700,593 737,555" fill="#06372a"/>
+        <polygon points="578,593 700,593 740,670 540,670" fill="#0c5a3f"/>
+        <polygon points="583,342 700,342 737,380 737,555 700,593 578,593 543,555 543,380" fill="url(#table)"/>
+      </g>
+      <polygon points="600,342 650,342 566,488 566,400" fill="#ffffff" opacity=".10"/>
+      <g stroke-linejoin="round" stroke-linecap="round" fill="none">
+        <path d="M535 290 L775 278 L770 142 L715 212 L630 115 L590 215 L510 165 Z" stroke="#1b6e4c" stroke-width="30" transform="translate(0,8)"/>
+        <path d="M535 282 L770 270 L765 134 L710 204 L630 107 L585 207 L505 157 Z" stroke="url(#crown)" stroke-width="26"/>
+      </g>
+      <path d="M640 405 L682 455 H656 V520 H624 V455 H598 Z" fill="#eafff5" opacity=".9"/>
+    </g>
+    <g stroke="#f2fff9" stroke-linecap="round">
+      <path d="M880 150 v40 M860 170 h40" stroke-width="3.5"/>
+      <path d="M390 380 v26 M377 393 h26" stroke-width="2.5"/>
+      <path d="M900 500 v26 M887 513 h26" stroke-width="2.5"/>
+    </g>
+  </svg>
+  <div class="top"><b>EMERALD</b><span><span id="num">#1284</span> · <span id="when">19:55</span></span></div>
+  <div class="badge" id="badge">НОВЫЙ ДЕПОЗИТ</div>
+  <div class="amount"><small>$</small><span id="amount">647</span></div>
+  <div class="pill-wrap"><div class="pill"><span>ВОРКЕР</span><b id="worker">lastsignal</b></div></div>
+  <div class="foot"><span id="method">USDT TRC20</span> · выплата <b id="payout">$420</b> · за день <b id="today">$4 820</b></div>
+</div>
+<script src="deposit-fill.js"></script>
