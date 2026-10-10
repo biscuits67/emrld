@@ -10,9 +10,6 @@ const cards = [
   ['all-dep', 'ALL DEP'],
   ['admin-vyvod', 'АДМИН ВЫВОД'],
   ['admin-dodepy', 'АДМИН ДОДЕПЫ'],
-  ['profile', 'ПРОФИЛЬ'],
-  ['vyplata', 'ВЫПЛАТА'],
-  ['top-dep', 'ТОП ДЕПОВ'],
 ];
 
 (async () => {
