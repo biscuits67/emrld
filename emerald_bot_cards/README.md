@@ -7,6 +7,7 @@
 | `cards.static("application_accepted")` | ✅ Заявка была принята | image file |
 | `cards.application_rejected(admin_username)` | ❌ Заявка была отклонена | drawn: admin |
 | `cards.static("wallet_trx")` | 💳 Выберите кошелек TRX | image file |
+| `cards.static("wallet_sol")` | 💳 Выберите кошелек SOL | image file |
 | `cards.static("nickname")` | ⭐️ Введите новый ник | image file |
 | `cards.wallet_address(wallet_name)` | 💳 Введите новый адрес {wallet_name} кошелька | drawn: wallet |
 | `cards.static("payout_choose")` | 💸 На какой кошелек заказать выплату? | image file |

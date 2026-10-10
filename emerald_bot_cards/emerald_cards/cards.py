@@ -7,6 +7,7 @@ from .render import ASSETS, render
 STATIC = (
     "application_accepted",  # ✅ Заявка была принята
     "wallet_trx",            # 💳 Выберите кошелек TRX
+    "wallet_sol",            # 💳 Выберите кошелек SOL
     "nickname",              # ⭐️ Введите новый ник
     "payout_choose",         # 💸 На какой кошелек вы хотите заказать выплату?
     "payout_done",           # ✅ Выплата совершена

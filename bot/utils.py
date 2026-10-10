@@ -89,7 +89,7 @@ async def show_user_profile(call: types.CallbackQuery = None, msg: types.Message
     else:
         branch_line = f"{E.NO} <b>Филиал:</b> не состоит"
 
-    trx_wallet = DB.get(user_id=user_id, data="trx_wallet", table=DB.users_table) or "Не привязан"
+    sol_wallet = DB.get(user_id=user_id, data="sol_wallet", table=DB.users_table) or "Не привязан"
     balance = DB.get(user_id=user_id, data="balance", table=DB.users_table)
     percentage = DB.get(user_id=user_id, data="percentage", table=DB.users_table)
     username = DB.get(user_id=user_id, data="username", table=DB.users_table)
@@ -103,7 +103,7 @@ async def show_user_profile(call: types.CallbackQuery = None, msg: types.Message
         f"{branch_line}\n"
         f"\n"
         f"{E.PURSE} <b>Привязанные кошельки:</b>\n"
-        f"└ TRX: <code>{html.escape(str(trx_wallet))}</code>\n"
+        f"└ SOL: <code>{html.escape(str(sol_wallet))}</code>\n"
         f"\n"
         f"{E.STAR} <b>Ник в отстуке:</b> <code>{html.escape(str(username))}</code>"
     )
