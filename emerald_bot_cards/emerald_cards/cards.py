@@ -144,3 +144,40 @@ def new_application(user, user_id, exp, forum) -> bytes:
 def payout_request(user, user_id, amount, wallet) -> bytes:
     """💰 Заявка на выплату (админам): 🆔 пользователь / ID, ⚡ сумма, 👛 кошелек"""
     return render("payout_request", user=user or "—", user_id=user_id, amount=money(amount), wallet=wallet or "—")
+
+
+def _num(value) -> str:
+    """3213123.0 -> '3 213 123', 450.5 -> '450.5'."""
+    try:
+        value = round(float(value or 0), 2)
+    except (TypeError, ValueError):
+        return str(value)
+    text = f"{value:,.0f}" if value.is_integer() else f"{value:,.2f}".rstrip("0").rstrip(".")
+    return text.replace(",", " ")
+
+
+def _delta(new, old, suffix="") -> str:
+    if old is None:
+        return ""
+    diff = round(float(new or 0) - float(old or 0), 2)
+    if diff > 0:
+        return f" (+{_num(diff)}{suffix})"
+    if diff < 0:
+        return f" (-{_num(-diff)}{suffix})"
+    return ""
+
+
+def promo_stats(promo_data: dict, snapshot: dict | None = None) -> bytes:
+    """👀 Статистика по промокоду: 💵 сумма, 🎰 отыгрыш, 🧟 активации, 💎 депозиты.
+    promo_data -- dict from promo_view_stats(); snapshot -- previous data, adds (+N) to activations and deposits."""
+    snapshot = snapshot or {}
+    acts = promo_data.get("activations", 0)
+    deps = promo_data.get("deposits", 0)
+    return render(
+        "promo_stats",
+        name=promo_data.get("name", ""),
+        amount=f"{_num(promo_data.get('amount'))} $",
+        wager="включен" if promo_data.get("shouldWager") else "отключен",
+        activations=f"{_num(acts)}{_delta(acts, snapshot.get('activations'))}",
+        deposits=f"{_num(deps)} ${_delta(deps, snapshot.get('deposits'), ' $')}",
+    )

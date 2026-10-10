@@ -42,6 +42,7 @@
 | `cards.profile(balance, percent, nick, branch)` | 👨‍💻 Профиль · Баланс · Процент · Ник · Филиал | drawn: profile |
 | `cards.new_application(user, user_id, exp, forum)` | 🚀 Новая заявка (админам) · Пользователь · ID · Опыт · Форум | drawn: application |
 | `cards.payout_request(user, user_id, amount, wallet)` | 💰 Заявка на выплату (админам) · Пользователь · ID · Сумма · Кошелек | drawn: payout |
+| `cards.promo_stats(promo_data, snapshot)` | 👀 Статистика по промокоду · Сумма · Отыгрыш · Активаций · Депозитов (с приростом) | drawn: promo stats |
 
 Static cards are JPEG files. Dynamic functions return JPEG bytes (~80 ms per card) — send them with
 `BufferedInputFile(data, "emerald.jpg")`. See `example_aiogram.py`.

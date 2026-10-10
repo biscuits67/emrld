@@ -1,6 +1,7 @@
 from io import StringIO
 import html
 import json
+import re
 import logging
 import sys
 import time
@@ -500,6 +501,18 @@ def build_promo_stats_with_diff(promo_data: dict, snapshot: dict | None = None):
             text += line + "\n"
     
     return text
+
+
+async def show_promo_stats(message: types.Message, promo_data: dict, snapshot: dict | None = None, reply_markup=None):
+    """
+    Показывает статистику промокода карточкой: картинка рисуется по тем же данным, что и текст.
+    Подпись к фото ограничена 1024 символами, если стран очень много - уйдет просто текстом.
+    """
+    text = build_promo_stats_with_diff(promo_data, snapshot)
+    if len(re.sub(r"<[^>]+>", "", text)) > 1024:
+        return await edit_text(message, text, reply_markup=reply_markup, parse_mode="HTML")
+    photo = card_photo(cards.promo_stats(promo_data, snapshot))
+    return await edit_card(message, photo, text, reply_markup=reply_markup, parse_mode="HTML")
 
 
 def country_code_to_flag(country_code):
