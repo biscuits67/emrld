@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<!-- Variant E: fintech push-notification stack -->
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1280px; height: 720px; overflow: hidden; background: #02110b; }
+  :root { --accent: #4fdc9f; --accent-hi: #e9fff5; --accent-mid: #a6f5cf; --glow: rgba(60, 220, 150, .5); --muted: #8fb8a6; }
+  .gold { --accent: #e3c27a; --accent-hi: #fff6dc; --accent-mid: #f3dca4; --glow: rgba(230, 190, 100, .5); }
+  .card {
+    position: relative; width: 1280px; height: 720px; overflow: hidden;
+    font-family: "Inter", sans-serif; color: #eafff5;
+    background: #02110b;
+  }
+  .blob { position: absolute; border-radius: 50%; filter: blur(70px); }
+  .b1 { width: 620px; height: 620px; left: -120px; top: -180px; background: #0f6a46; opacity: .75; }
+  .b2 { width: 520px; height: 520px; right: -100px; bottom: -220px; background: var(--accent); opacity: .28; }
+  .b3 { width: 360px; height: 360px; left: 520px; top: 200px; background: #0b4a33; opacity: .9; }
+  .noise { position: absolute; inset: 0; opacity: .5;
+    background-image: radial-gradient(rgba(255,255,255,.035) 1px, transparent 1px); background-size: 4px 4px; }
+
+  .side { position: absolute; left: 80px; top: 0; bottom: 0; width: 420px; display: flex; flex-direction: column; justify-content: center; }
+  .brand { display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 22px; letter-spacing: 8px; }
+  .brand i { width: 24px; height: 24px; border-radius: 6px; transform: rotate(45deg) scale(.8);
+    background: linear-gradient(135deg, #8af0c4, #14905e); box-shadow: 0 0 16px rgba(60, 220, 150, .6); }
+  .side h1 { margin-top: 40px; font-size: 64px; line-height: 1.02; font-weight: 800; letter-spacing: -2px; }
+  .side h1 span { color: var(--accent); }
+  .side p { margin-top: 22px; font-size: 22px; color: var(--muted); line-height: 1.5; }
+  .side p b { color: #eafff5; }
+
+  .stack { position: absolute; right: 80px; top: 50%; width: 640px; transform: translateY(-50%); height: 420px; }
+  .n {
+    position: absolute; left: 0; right: 0; border-radius: 32px; padding: 30px 34px;
+    background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.04));
+    border: 1px solid rgba(255,255,255,.12);
+    backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+    box-shadow: 0 30px 80px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.12);
+  }
+  .n.back2 { top: 0; transform: scale(.86); opacity: .35; height: 150px; }
+  .n.back1 { top: 34px; transform: scale(.93); opacity: .6; height: 150px; }
+  .n.main { top: 80px; }
+  .n.back1::after, .n.back2::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: rgba(2,17,11,.35); }
+
+  .nh { display: flex; align-items: center; gap: 14px; font-size: 19px; color: rgba(234,255,245,.7); }
+  .app { width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center;
+    background: linear-gradient(135deg, #1fae74, #0b5a3c); box-shadow: inset 0 1px 0 rgba(255,255,255,.25); }
+  .app i { width: 16px; height: 16px; border-radius: 4px; transform: rotate(45deg); background: #c9ffe6; }
+  .nh b { color: #eafff5; font-weight: 700; letter-spacing: 3px; font-size: 17px; }
+  .nh .t { margin-left: auto; }
+  .ttl { margin-top: 22px; font-size: 26px; font-weight: 600; color: rgba(234,255,245,.85); }
+  .amount {
+    margin-top: 6px; font-weight: 800; font-size: 120px; line-height: 1.05; letter-spacing: -3px; font-variant-numeric: tabular-nums;
+    background: linear-gradient(180deg, var(--accent-hi), var(--accent));
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 24px var(--glow));
+  }
+  .amount small { font-size: 70px; vertical-align: 38px; margin-right: 4px; letter-spacing: 0; }
+  .meta { margin-top: 18px; display: flex; gap: 10px; flex-wrap: nowrap; }
+  .tag { padding: 10px 16px; border-radius: 12px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.08);
+    font-size: 20px; color: rgba(234,255,245,.75); white-space: nowrap; }
+  .tag b { color: #fff; }
+  .tag.hl { background: color-mix(in srgb, var(--accent) 18%, transparent); border-color: color-mix(in srgb, var(--accent) 45%, transparent); color: var(--accent-mid); }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="blob b1"></div><div class="blob b3"></div><div class="blob b2"></div>
+  <div class="noise"></div>
+
+  <div class="side">
+    <div class="brand"><i></i>EMERALD</div>
+    <h1>Новый<br><span>профит</span></h1>
+    <p>За сегодня <b id="today">$4 820</b><br><b id="count">12</b> депозитов в команде</p>
+  </div>
+
+  <div class="stack">
+    <div class="n back2"></div>
+    <div class="n back1"></div>
+    <div class="n main">
+      <div class="nh"><div class="app"><i></i></div><b>EMERALD</b><span class="t" id="when">сейчас</span></div>
+      <div class="ttl"><span id="badge">НОВЫЙ ДЕПОЗИТ</span> · <span id="worker">lastsignal</span></div>
+      <div class="amount">+<small>$</small><span id="amount">647</span></div>
+      <div class="meta">
+        <div class="tag" id="num">#1284</div>
+        <div class="tag" id="method">USDT TRC20</div>
+        <div class="tag hl">выплата <b id="payout">$420</b></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script src="deposit-fill.js"></script>
