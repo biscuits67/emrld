@@ -1,0 +1,215 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { width: 1280px; height: 720px; overflow: hidden; background: #03140e; }
+  :root {
+    --accent: #4fdc9f; --accent-hi: #e9fff5; --accent-mid: #a6f5cf;
+    --glow: rgba(60, 220, 150, .45); --text: #eafff5; --muted: #8fb8a6;
+  }
+  .gold {
+    --accent: #e3c27a; --accent-hi: #fff6dc; --accent-mid: #f3dca4;
+    --glow: rgba(230, 190, 100, .45);
+  }
+  .card {
+    position: relative; width: 1280px; height: 720px; overflow: hidden;
+    font-family: "Inter", "Inter Display", sans-serif; color: var(--text);
+    background:
+      radial-gradient(ellipse 520px 480px at 960px 330px, rgba(18, 110, 72, .55), transparent 70%),
+      radial-gradient(ellipse 1100px 800px at 700px 360px, #0b3f2c 0%, #062a1c 50%, #031a12 100%);
+  }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(rgba(120, 220, 170, .05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(120, 220, 170, .05) 1px, transparent 1px);
+    background-size: 40px 40px;
+    -webkit-mask-image: radial-gradient(ellipse 520px 420px at 960px 340px, #000 25%, transparent 80%);
+            mask-image: radial-gradient(ellipse 520px 420px at 960px 340px, #000 25%, transparent 80%);
+  }
+  .edge {
+    position: absolute; inset: 0; border-radius: 0;
+    box-shadow: inset 0 0 0 1px rgba(120, 230, 180, .10), inset 0 0 160px rgba(0, 8, 5, .6);
+  }
+  svg.art { position: absolute; left: 0; top: 0; }
+  .gold svg.art { filter: hue-rotate(-108deg) saturate(.85) brightness(1.12); }
+  .gold .grid { filter: hue-rotate(-108deg); }
+
+  .top {
+    position: absolute; left: 72px; right: 72px; top: 56px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .brand { display: flex; align-items: center; gap: 14px; font-weight: 700; font-size: 26px; letter-spacing: 8px; }
+  .brand i {
+    width: 30px; height: 30px; border-radius: 8px; transform: rotate(45deg) scale(.8);
+    background: linear-gradient(135deg, #8af0c4, #14905e);
+    box-shadow: 0 0 18px rgba(60, 220, 150, .6);
+  }
+  .meta { font-size: 24px; color: var(--muted); font-variant-numeric: tabular-nums; letter-spacing: 1px; }
+  .meta b { color: var(--text); font-weight: 600; }
+
+  .badge {
+    position: absolute; left: 72px; top: 150px;
+    display: inline-flex; align-items: center; gap: 12px;
+    padding: 10px 20px; border-radius: 999px;
+    border: 1.5px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    font-weight: 700; font-size: 20px; letter-spacing: 4px; color: var(--accent);
+  }
+  .badge::before {
+    content: ""; width: 10px; height: 10px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 12px var(--accent);
+  }
+
+  .amount {
+    position: absolute; left: 66px; top: 196px;
+    font-weight: 800; font-size: 188px; line-height: 1; letter-spacing: -4px;
+    font-variant-numeric: tabular-nums;
+    background: linear-gradient(180deg, var(--accent-hi) 0%, var(--accent-mid) 45%, var(--accent) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    filter: drop-shadow(0 0 26px var(--glow));
+  }
+  .amount small { font-size: 96px; letter-spacing: 0; vertical-align: 64px; margin-right: 6px; }
+
+  .chips { position: absolute; left: 72px; top: 420px; display: flex; gap: 16px; }
+  .chip {
+    display: flex; align-items: center; gap: 16px;
+    padding: 16px 24px 16px 16px; border-radius: 20px;
+    background: linear-gradient(180deg, rgba(20, 60, 44, .75), rgba(8, 30, 22, .8));
+    border: 1px solid rgba(120, 230, 180, .14);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, .05);
+  }
+  .chip .ico {
+    width: 56px; height: 56px; border-radius: 14px; display: grid; place-items: center;
+    font-weight: 700; font-size: 22px; color: #04170f;
+    background: linear-gradient(135deg, var(--accent-mid), var(--accent));
+  }
+  .chip .ico.dim { background: rgba(120, 230, 180, .12); color: var(--accent); }
+  .chip .k { font-size: 16px; letter-spacing: 3px; color: var(--muted); font-weight: 600; text-transform: uppercase; }
+  .chip .v { font-size: 30px; font-weight: 700; margin-top: 4px; white-space: nowrap; }
+  .chip .v em { font-style: normal; color: var(--muted); font-weight: 500; font-size: 24px; }
+
+  .foot {
+    position: absolute; left: 72px; right: 72px; bottom: 52px;
+    display: flex; align-items: center; gap: 28px;
+    padding-top: 26px; border-top: 1px solid rgba(120, 230, 180, .12);
+  }
+  .foot .stat { font-size: 22px; color: var(--muted); white-space: nowrap; }
+  .foot .stat b { color: var(--text); font-weight: 700; font-variant-numeric: tabular-nums; }
+  .bar { flex: 1; height: 10px; border-radius: 99px; background: rgba(120, 230, 180, .10); overflow: hidden; }
+  .bar span {
+    display: block; height: 100%; border-radius: 99px;
+    background: linear-gradient(90deg, #14905e, var(--accent));
+    box-shadow: 0 0 14px var(--glow);
+  }
+</style>
+</head>
+<body>
+<div class="card" id="card">
+  <div class="grid"></div>
+  <svg class="art" id="art" width="1280" height="720" viewBox="0 0 1280 720">
+    <defs>
+      <radialGradient id="glow" cx="1065" cy="270" r="250" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#22c47f" stop-opacity=".5"/>
+        <stop offset="1" stop-color="#22c47f" stop-opacity="0"/>
+      </radialGradient>
+      <linearGradient id="table" x1="905" y1="210" x2="1015" y2="420" gradientUnits="userSpaceOnUse">
+        <stop offset="0" stop-color="#2bbd84"/>
+        <stop offset="1" stop-color="#14905e"/>
+      </linearGradient>
+      <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="18"/></filter>
+    </defs>
+    <circle cx="1065" cy="270" r="250" fill="url(#glow)"/>
+    <ellipse cx="1065" cy="440" rx="90" ry="16" fill="#2ad08a" opacity=".35" filter="url(#soft)"/>
+    <!-- gem (same facet language as template.html) -->
+    <g transform="translate(1065 275) scale(.78) translate(-640 -477)">
+      <g stroke="#0b3d2a" stroke-width="1.5" stroke-linejoin="round">
+        <polygon points="520,285 760,285 700,342 583,342" fill="#3fd29c"/>
+        <polygon points="465,340 520,285 583,342 543,380" fill="#56dcaa"/>
+        <polygon points="760,285 815,340 737,380 700,342" fill="#22b07a"/>
+        <polygon points="465,340 543,380 543,555 465,600" fill="#16875a"/>
+        <polygon points="815,340 815,600 737,555 737,380" fill="#1a9967"/>
+        <polygon points="465,600 543,555 578,593 540,670" fill="#06372a"/>
+        <polygon points="815,600 740,670 700,593 737,555" fill="#06372a"/>
+        <polygon points="578,593 700,593 740,670 540,670" fill="#0c5a3f"/>
+        <polygon points="583,342 700,342 737,380 737,555 700,593 578,593 543,555 543,380" fill="url(#table)"/>
+      </g>
+      <polygon points="595,365 690,365 714,390 714,545 690,570 590,570 566,545 566,390" fill="none" stroke="#5fe3b1" stroke-opacity=".28" stroke-width="2"/>
+      <polygon points="600,342 650,342 566,488 566,400" fill="#ffffff" opacity=".10"/>
+      <!-- up-arrow mark instead of rocket -->
+      <path d="M640 405 L682 455 H656 V520 H624 V455 H598 Z" fill="#eafff5" opacity=".92"/>
+    </g>
+    <g stroke="#f2fff9" stroke-linecap="round">
+      <path d="M1200 120 v34 M1183 137 h34" stroke-width="3.5"/>
+      <path d="M900 190 v22 M889 201 h22" stroke-width="2.5"/>
+      <path d="M1215 400 v22 M1204 411 h22" stroke-width="2.5"/>
+    </g>
+  </svg>
+  <div class="edge"></div>
+
+  <div class="top">
+    <div class="brand"><i></i>EMERALD</div>
+    <div class="meta"><b id="num">#1284</b> · <span id="when">10.10.2026 · 19:55</span></div>
+  </div>
+
+  <div class="badge" id="badge">НОВЫЙ ДЕПОЗИТ</div>
+  <div class="amount"><small>$</small><span id="amount">647</span></div>
+
+  <div class="chips">
+    <div class="chip">
+      <div class="ico" id="initials">LS</div>
+      <div><div class="k">Воркер</div><div class="v" id="worker">lastsignal</div></div>
+    </div>
+    <div class="chip">
+      <div class="ico dim" id="mico">₮</div>
+      <div><div class="k">Метод</div><div class="v" id="method">USDT <em>TRC20</em></div></div>
+    </div>
+    <div class="chip">
+      <div class="ico dim">%</div>
+      <div><div class="k">Выплата</div><div class="v"><span id="payout">$420</span> <em id="share">65%</em></div></div>
+    </div>
+  </div>
+
+  <div class="foot">
+    <div class="stat">Сегодня <b id="today">$4 820</b> · <b id="count">12</b> депозитов</div>
+    <div class="bar"><span id="progress" style="width:48%"></span></div>
+    <div class="stat">цель <b id="goal">$10 000</b></div>
+  </div>
+</div>
+<script>
+  // Fill from query string: ?amount=647&worker=lastsignal&num=1284&...
+  const fmt = (n) => {
+    const [i, f] = Number(n).toFixed(2).split('.');
+    return i.replace(/\B(?=(\d{3})+(?!\d))/g, ' ') + (f === '00' ? '' : '.' + f);
+  };
+  window.fill = (d) => {
+    const set = (id, v) => { if (v != null) document.getElementById(id).textContent = v; };
+    if (d.amount != null) {
+      set('amount', fmt(d.amount));
+      const big = Number(d.amount) >= 1000;
+      document.getElementById('card').classList.toggle('gold', big);
+      set('badge', big ? 'КРУПНЫЙ ДЕПОЗИТ' : 'НОВЫЙ ДЕПОЗИТ');
+    }
+    if (d.worker != null) { set('worker', d.worker); set('initials', d.worker.slice(0, 2).toUpperCase()); }
+    if (d.num != null) set('num', '#' + d.num);
+    set('when', d.when);
+    if (d.method != null) {
+      const [m, net] = d.method.split(' ');
+      set('mico', { USDT: '₮', BTC: '₿', ETH: 'Ξ', TON: '◆', CARD: '▭' }[m.toUpperCase()] || m[0]);
+      document.getElementById('method').innerHTML = '';
+      document.getElementById('method').append(m, ' ', Object.assign(document.createElement('em'), { textContent: net || '' }));
+    }
+    if (d.payout != null) set('payout', '$' + fmt(d.payout));
+    if (d.share != null) set('share', d.share + '%');
+    if (d.today != null) set('today', '$' + fmt(d.today));
+    set('count', d.count);
+    if (d.goal != null) set('goal', '$' + fmt(d.goal));
+    if (d.today != null && d.goal != null)
+      document.getElementById('progress').style.width = Math.min(100, d.today / d.goal * 100) + '%';
+  };
+  window.fill(Object.fromEntries(new URLSearchParams(location.search)));
+</script>
+</body>
+</html>
